@@ -1,6 +1,7 @@
 .DS_Store
 .claude/
 *.pdf
+!assets/bhumi-portfolio.pdf
 node_modules/
 .vscode/
 .idea/

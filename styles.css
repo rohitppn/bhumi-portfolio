@@ -350,6 +350,47 @@ body.cursor-hover .cursor-dot { transform: translate(-50%, -50%) scale(0.6); }
   transform: translateY(-3px) scale(1.03);
 }
 
+/* Download button — subtle pulse to invite clicks; arrow nudges down on hover */
+.btn-download {
+  position: relative;
+  animation: downloadPulse 2.6s ease-in-out infinite;
+}
+.btn-download svg { transition: transform .35s var(--ease-bounce); }
+.btn-download:hover svg { transform: translateY(3px); }
+.btn-download::after {
+  content: ""; position: absolute; inset: -4px;
+  border-radius: inherit;
+  border: 2px solid rgba(255, 255, 255, .35);
+  opacity: 0;
+  pointer-events: none;
+  animation: downloadHalo 2.6s ease-out infinite;
+}
+@keyframes downloadPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+  50%      { box-shadow: 0 8px 28px -6px rgba(255, 255, 255, .35); }
+}
+@keyframes downloadHalo {
+  0%   { opacity: .55; transform: scale(.96); }
+  70%  { opacity: 0;   transform: scale(1.12); }
+  100% { opacity: 0;   transform: scale(1.12); }
+}
+
+/* In the contact section (light pink bg), inverted ghost reads better */
+.contact-actions .btn-download {
+  animation: downloadPulsePink 2.6s ease-in-out infinite;
+}
+.contact-actions .btn-download::after {
+  border-color: rgba(196, 0, 118, .35);
+}
+@keyframes downloadPulsePink {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(196, 0, 118, 0); }
+  50%      { box-shadow: 0 8px 28px -6px rgba(196, 0, 118, .4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-download, .btn-download::after { animation: none; }
+}
+
 .hero-stats {
   display: grid; grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem; max-width: 800px; margin: 0 auto;

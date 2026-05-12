@@ -2,7 +2,7 @@
 
 Personal portfolio site for **Bhumi**, a Social Media Manager & Content Strategist with 5+ years of experience.
 
-🔗 **Live site:** https://rohitppn.github.io/bhumi-portfolio/
+🔗 **Live site:** https://www.bhumisocials.com
 
 ## Stack
 

@@ -56,21 +56,28 @@
   window.addEventListener('scroll', updateScroll, { passive: true });
   updateScroll();
 
-  // ----- Mobile nav toggle
-  const navToggle = document.querySelector('.nav-toggle');
-  const navLinks  = document.querySelector('.nav-links');
+  // ----- Mobile nav: hamburger toggles, X closes, backdrop closes, links close, Esc closes
+  const navToggle   = document.querySelector('.nav-toggle');
+  const navLinks    = document.querySelector('.nav-links');
+  const navClose    = document.querySelector('.nav-close');
+  const navBackdrop = document.querySelector('.nav-backdrop');
+
+  const setNav = (open) => {
+    navLinks.classList.toggle('open', open);
+    navToggle.classList.toggle('open', open);
+    navBackdrop?.classList.toggle('visible', open);
+    document.body.classList.toggle('nav-open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+
   if (navToggle && navLinks) {
-    navToggle.addEventListener('click', () => {
-      const open = navLinks.classList.toggle('open');
-      navToggle.classList.toggle('open', open);
-      navToggle.setAttribute('aria-expanded', String(open));
-    });
-    navLinks.querySelectorAll('a').forEach((a) => {
-      a.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        navToggle.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
+    navToggle.addEventListener('click', () => setNav(!navLinks.classList.contains('open')));
+    navClose?.addEventListener('click', () => setNav(false));
+    navBackdrop?.addEventListener('click', () => setNav(false));
+    navLinks.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setNav(false)));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('open')) setNav(false);
     });
   }
 

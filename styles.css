@@ -192,25 +192,70 @@ body.cursor-hover .cursor-dot { transform: translate(-50%, -50%) scale(0.6); }
 .nav-toggle {
   display: none; flex-direction: column; gap: 5px;
   width: 28px; padding: 4px;
+  position: relative; z-index: 102;
 }
 .nav-toggle span {
   height: 2px; width: 100%; background: var(--magenta); border-radius: 2px;
   transition: transform .3s var(--ease), opacity .3s var(--ease);
 }
 
+.nav-close {
+  display: none;
+}
+.nav-backdrop { display: none; }
+
 @media (max-width: 860px) {
   .nav-toggle { display: flex; }
   .nav-links {
-    position: fixed; top: 0; right: -100%; width: 80%; max-width: 360px;
+    position: fixed; top: 0; right: -100%; width: 82%; max-width: 360px;
     height: 100vh; flex-direction: column; justify-content: center;
     background: linear-gradient(160deg, var(--pink-50), var(--pink-100));
     gap: 1.5rem; padding: 2rem; transition: right .4s var(--ease);
     box-shadow: -10px 0 40px rgba(139,15,92,.15);
+    z-index: 101;
   }
   .nav-links.open { right: 0; }
   .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .nav-toggle.open span:nth-child(2) { opacity: 0; }
   .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .nav-close {
+    display: flex;
+    position: absolute; top: 1rem; right: 1rem;
+    width: 44px; height: 44px;
+    align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: var(--white);
+    color: var(--magenta);
+    border: 1.5px solid var(--pink-300);
+    box-shadow: 0 6px 18px -4px rgba(139,15,92,.2);
+    transition: transform .3s var(--ease-bounce), background .25s var(--ease), color .25s var(--ease);
+    cursor: pointer;
+    z-index: 103;
+  }
+  .nav-close:hover, .nav-close:focus-visible {
+    background: var(--pink-500); color: var(--white);
+    transform: rotate(90deg) scale(1.05);
+    outline: none;
+  }
+  .nav-close:active { transform: rotate(90deg) scale(0.95); }
+
+  .nav-backdrop {
+    display: block;
+    position: fixed; inset: 0;
+    background: rgba(90, 9, 66, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0; pointer-events: none;
+    transition: opacity .35s var(--ease);
+    z-index: 100;
+  }
+  .nav-backdrop.visible {
+    opacity: 1; pointer-events: auto;
+  }
+
+  /* Lock body scroll when menu is open */
+  body.nav-open { overflow: hidden; }
 }
 
 /* ============= HERO ============= */
